@@ -21,12 +21,9 @@ install requirements
 ```
 pip install -r requirements.txt
 ```
-...
 
 launch
-```
-python3 main.py
-```
+
 
 
 ## How to run in docker container
