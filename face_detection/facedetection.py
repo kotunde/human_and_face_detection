@@ -7,10 +7,11 @@ import numpy as np
 import cv2 
 import matplotlib.pyplot as plt
 
-
+# convert to RBG
 def convertToRGB(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 	
+# face detection	
 def detect_faces(cascade, test_image, scaleFactor = 1.1):
     image_copy = test_image.copy()
     
@@ -24,19 +25,32 @@ def detect_faces(cascade, test_image, scaleFactor = 1.1):
     for (x, y, w, h) in faces_rect:
         cv2.rectangle(image_copy, (x, y), (x+w, y+h), (0, 255, 0), 15)
         
-    return image_copy
+    if len(faces_rect) == 0:
+        faces_rect = False
+    else:
+        faces_rect = True
+        
+    return image_copy, faces_rect
 	
-#loading the image
-test_image2 = cv2.imread('test_image.jpg')
+# main function	
+def main(image_uri):      
+    #loading the image
+    test_image2 = cv2.imread(image_uri)
 
+    #calling the function to detect faces
+    faces, detected = detect_faces(haar_cascade_face, test_image2)
+
+    #convert to RGB and display image
+    plt.imshow(convertToRGB(faces))
+
+    #saving the new picture
+    #cv2.imwrite('faces_detected.png', faces)
+    
+    #print(detected)
+    return detected 
+    
 #loading the classifier
-haar_cascade_face = cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml')
+haar_cascade_face = cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml')   # or cascade.xml
 
-#calling the function to detect faces
-faces = detect_faces(haar_cascade_face, test_image2)
+#main() 
 
-#convert to RGB and display image
-plt.imshow(convertToRGB(faces))
-
-#saving the new picture
-cv2.imwrite('faces_detected.png', faces)
