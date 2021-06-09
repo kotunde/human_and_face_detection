@@ -30,3 +30,10 @@ python3 main.py
 
 
 ## How to run in docker container
+- install docker [see here](https://docs.docker.com/engine/install/ubuntu/#installation-methods)
+
+- pull docker image 
+```
+docker pull kovacstunde/detector
+```
+- create a container from docker image. Clone repository (see first step from "Run locally")
